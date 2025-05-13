@@ -2,6 +2,8 @@ import paho.mqtt.client as mqtt
 import json
 import time
 from pipuck.pipuck import PiPuck
+import random
+
 
 # Define variables and callbacks
 Broker = "192.168.178.56"  # Replace with your broker address
@@ -35,10 +37,32 @@ pipuck = PiPuck(epuck_version=2)
 # Set the robot's speed, e.g. with
 #pipuck.epuck.set_motor_speeds(1000,-1000)
 pipuck.set_led_colour(1, "magenta")
-pipuck.set_led_rgb(0, 1, 0, 0)
-for _ in range(1000):
-    # TODO: Do your stuff here
-	time.sleep(1)
+#pipuck.set_led_rgb(0, 1, 0, 0)
+workspace_Lboarder = 50
+workspace_RBoarder = 60
+try:
+    for _ in range(1000):
+        # TODO: Do your stuff here
+        speed = random.randint(300,1000)
+        turn_speed = random.randint(100, 300)
+        duration = random.randint(1,10)
+        direction = random.choice(["left", "right"])
+        start_time = time.time()
+        
+        pipuck.epuck.set_motor_speeds(speed,speed)
+        time.sleep(duration)
+        if direction == "left":
+            pipuck.epuck.set_motor_speeds(-turn_speed, turn_speed)
+        else:
+            pipuck.epuck.set_motor_speeds(turn_speed, -turn_speed)
+        time.sleep(duration/10.0)
+
+except KeyboardInterrupt:
+    print("Interrupt detected!!")
+finally:
+    pipuck.epuck.set_motor_speeds(0,0)
+
+
 	
     
 # Stop the MQTT client loop
