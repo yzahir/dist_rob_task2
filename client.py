@@ -46,27 +46,25 @@ workspace_RBoarder = 60
 try:
     for _ in range(1000):
         # TODO: Do your stuff here
-        try:
-            speed = random.randint(300,1000)
-            turn_speed = random.randint(100, 300)
-            duration = random.randint(1,10)
-            direction = random.choice(["left", "right"])
-            start_time = time.time()
-
-            pipuck.epuck.set_motor_speeds(speed,speed)
-            if "position" in pos:
-                current_pos = pos["position"]
-                avoid_turn = 500
-                if(current_pos[0]<0.2 or  current_pos[0]>1.9 or current_pos[1]>0.9 or current_pos[1]<0.2):
-                    pipuck.epuck.set_motor_speeds(-avoid_turn, avoid_turn)
-                    time.sleep(duration)/10
-                    continue
-            if direction == "left":
-                pipuck.epuck.set_motor_speeds(-turn_speed, turn_speed)
-            else:
-                pipuck.epuck.set_motor_speeds(turn_speed, -turn_speed)
-            time.sleep(duration/10.0)
-        except
+        
+        speed = random.randint(300,1000)
+        turn_speed = random.randint(100, 300)
+        duration = random.randint(1,10)
+        direction = random.choice(["left", "right"])
+        start_time = time.time()
+        pipuck.epuck.set_motor_speeds(speed,speed)
+        if "position" in pos:
+            current_pos = pos["position"]
+            avoid_turn = 500
+            if(current_pos[0]<0.2 or  current_pos[0]>1.9 or current_pos[1]>0.9 or current_pos[1]<0.2):
+                pipuck.epuck.set_motor_speeds(-avoid_turn, avoid_turn)
+                time.sleep(duration)/10
+                continue
+        if direction == "left":
+            pipuck.epuck.set_motor_speeds(-turn_speed, turn_speed)
+        else:
+            pipuck.epuck.set_motor_speeds(turn_speed, -turn_speed)
+        time.sleep(duration/10.0)
 
 except KeyboardInterrupt:
     print("Interrupt detected!!")
