@@ -56,7 +56,7 @@ try:
         if "position" in pos:
             current_pos = pos["position"]
             avoid_turn = 500
-            if(current_pos[0]<0.2 or  current_pos[0]>1.9 or current_pos[1]>0.9 or current_pos[1]<0.2):
+            if(current_pos[0]<0.3 or  current_pos[0]>1.8 or current_pos[1]>0.8 or current_pos[1]<0.3):
                 pipuck.epuck.set_motor_speeds(-avoid_turn, avoid_turn)
                 time.sleep(0.5)
                 pipuck.epuck.set_motor_speeds(speed,speed)
