@@ -8,7 +8,7 @@ import random
 # Define variables and callbacks
 Broker = "192.168.178.56"  # Replace with your broker address
 Port = 1883 # standard MQTT port
-
+data
 # function to handle connection
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
@@ -17,9 +17,9 @@ def on_connect(client, userdata, flags, rc):
 # function to handle incoming messages
 def on_message(client, userdata, msg):
     try:
+        global data
         data = json.loads(msg.payload.decode())
-        #print(data)
-        return data
+        print(data)
     except json.JSONDecodeError:
         print(f'invalid json: {msg.payload}')
 
@@ -51,8 +51,7 @@ try:
         start_time = time.time()
         
         pipuck.epuck.set_motor_speeds(speed,speed)
-        current_pos = on_message
-        print(current_pos["35"]["position"])
+        print(data["35"]["position"])
         #if(current_pos[0]<0.2 or  current_pos[0]>1.9 or current_pos[1]>0.9 or current_pos[1]<0.2):
         #    pipuck.epuck.set_motor_speeds(-turn_speed, turn_speed)
         time.sleep(duration)
