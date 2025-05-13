@@ -21,7 +21,7 @@ def on_message(client, userdata, msg):
         data = json.loads(msg.payload.decode())
         if "2" in data:
             pos = data["2"]
-        print(data)
+        #print(data)
     except json.JSONDecodeError:
         print(f'invalid json: {msg.payload}')
 
@@ -54,8 +54,8 @@ try:
         
         pipuck.epuck.set_motor_speeds(speed,speed)
         print(pos)
-        if "position" in pos:
-            print(pos)
+        #if "position" in pos:
+        #print(pos)
         #if(current_pos[0]<0.2 or  current_pos[0]>1.9 or current_pos[1]>0.9 or current_pos[1]<0.2):
         #    pipuck.epuck.set_motor_speeds(-turn_speed, turn_speed)
         time.sleep(duration)
