@@ -4,7 +4,7 @@ import time
 from pipuck.pipuck import PiPuck
 import random
 
-data = {}
+pos = {}
 
 # Define variables and callbacks
 Broker = "192.168.178.56"  # Replace with your broker address
@@ -17,8 +17,10 @@ def on_connect(client, userdata, flags, rc):
 # function to handle incoming messages
 def on_message(client, userdata, msg):
     try:
-        global data
+        global pos
         data = json.loads(msg.payload.decode())
+        if "2" in data:
+            pos = data["2"]
         print(data)
     except json.JSONDecodeError:
         print(f'invalid json: {msg.payload}')
@@ -51,8 +53,9 @@ try:
         start_time = time.time()
         
         pipuck.epuck.set_motor_speeds(speed,speed)
-        if "2" in data:
-            print(data["35"]["position"])
+        print(pos)
+        if "position" in pos:
+            print(pos)
         #if(current_pos[0]<0.2 or  current_pos[0]>1.9 or current_pos[1]>0.9 or current_pos[1]<0.2):
         #    pipuck.epuck.set_motor_speeds(-turn_speed, turn_speed)
         time.sleep(duration)
