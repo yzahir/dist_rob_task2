@@ -53,10 +53,11 @@ try:
         start_time = time.time()
         
         pipuck.epuck.set_motor_speeds(speed,speed)
-        current_pos = pos["position"]
-        avoid_turn = 500
-        if(pos[0]<0.2 or  current_pos[0]>1.9 or current_pos[1]>0.9 or current_pos[1]<0.2):
-            pipuck.epuck.set_motor_speeds(-avoid_turn, avoid_turn)
+        if "position" in pos:
+            current_pos = pos["position"]
+            avoid_turn = 500
+            if(pos[0]<0.2 or  current_pos[0]>1.9 or current_pos[1]>0.9 or current_pos[1]<0.2):
+                pipuck.epuck.set_motor_speeds(-avoid_turn, avoid_turn)
         time.sleep(duration)
         if direction == "left":
             pipuck.epuck.set_motor_speeds(-turn_speed, turn_speed)
