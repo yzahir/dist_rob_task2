@@ -66,7 +66,7 @@ try:
                 pipuck.epuck.set_motor_speeds(-avoid_turn, avoid_turn)
                 time.sleep(0.5)
                 pipuck.epuck.set_motor_speeds(speed,speed)
-                time.sleep(1)
+                time.sleep(0.8)
                 continue
         pipuck.epuck.set_motor_speeds(speed,speed)
         time.sleep(duration/10.0)
