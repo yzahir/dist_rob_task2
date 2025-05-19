@@ -23,7 +23,7 @@ def on_message(client, userdata, msg):
         global pos, all_pos
 
         data = json.loads(msg.payload.decode())
-        if msg.topic.startwith("robot/"):
+        if msg.topic.startswith("robot/"):
             robot_msg = json.loads(msg.payload.decode())
             print(f"received message: {robot_msg}")
             pipuck.set_leds_colour("magenta")
