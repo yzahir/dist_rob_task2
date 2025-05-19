@@ -23,6 +23,9 @@ def on_message(client, userdata, msg):
         global pos, all_pos
 
         data = json.loads(msg.payload.decode())
+        if msg.topic == "robot/+":
+            robot_msg = json.loads(msg.payload.decode())
+            pipuck.set_leds_colour("magenta")
         all_pos = data
         if robot_id in data:
             pos = data[robot_id]
@@ -90,7 +93,7 @@ try:
                     client.publish(str, "Hello")
                     last_pub_time = time.time()
                     continue
-                    
+                                    
 
 except KeyboardInterrupt:
     print("Interrupt detected!!")
