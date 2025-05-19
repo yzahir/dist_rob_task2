@@ -47,7 +47,7 @@ pipuck = PiPuck(epuck_version=2)
 
 # Set the robot's speed, e.g. with
 #pipuck.epuck.set_motor_speeds(1000,-1000)
-pipuck.set_led_colour(1, "magenta")
+#pipuck.set_led_colour(1, "magenta")
 #pipuck.set_led_rgb(0, 1, 0, 0)
 workspace_Lboarder = 50
 workspace_RBoarder = 60
