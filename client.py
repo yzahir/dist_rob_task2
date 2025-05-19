@@ -6,7 +6,7 @@ import random
 
 pos = {}
 all_pos = {}
-robot_id = "40" 
+robot_id = "35" 
 
 # Define variables and callbacks
 Broker = "192.168.178.56"  # Replace with your broker address
@@ -15,7 +15,7 @@ Port = 1883 # standard MQTT port
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
     client.subscribe("robot_pos/all")
-    client.subscribe(f"robot/{robot_id}")
+    client.subscribe(f"robot/+")
 
 # function to handle incoming messages
 def on_message(client, userdata, msg):
