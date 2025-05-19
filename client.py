@@ -88,6 +88,8 @@ try:
                     print(f"robot {rbt_id} is 50 cm away")
                     str = f"robot_pos/{rbt_id}"
                     client.publish(str, "Hello")
+                    last_pub_time = time.time()
+                    continue
                     
 
 except KeyboardInterrupt:
