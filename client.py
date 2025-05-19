@@ -78,13 +78,16 @@ try:
 
         if time.time() - last_pub_time> publish_interval:
             # read the position of all  robots, check if the robot in 50 cm radius and send a message to the one in the inerval
-            x = pos[0]
-            y = pos[1]
+            #x = pos[0]
+            #y = pos[1]
             for rbt_id, robot_pos in all_pos.items():
-                if (robot_pos[0]-x)**2 + (robot_pos[1]-y)**2 < 0.5:
-                    print(f"robot {rbt_id} is 50 cm away")
-                    str = f"robot_pos/{rbt_id}"
-                    client.publish(str, "Hello")
+                if rbt_id == robot_id:
+                    x = robot_pos[0]
+                    y = robot_pos[1]
+                    if (robot_pos[0]-x)**2 + (robot_pos[1]-y)**2 < 0.5:
+                        print(f"robot {rbt_id} is 50 cm away")
+                        str = f"robot_pos/{rbt_id}"
+                        client.publish(str, "Hello")
                     
 
 except KeyboardInterrupt:
