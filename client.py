@@ -5,6 +5,8 @@ from pipuck.pipuck import PiPuck
 import random
 
 pos = {}
+all_pos = {}
+robot_id = "40" 
 
 # Define variables and callbacks
 Broker = "192.168.178.56"  # Replace with your broker address
@@ -13,14 +15,17 @@ Port = 1883 # standard MQTT port
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
     client.subscribe("robot_pos/all")
+    client.subscribe(f"robot/{robot_id}")
 
 # function to handle incoming messages
 def on_message(client, userdata, msg):
     try:
-        global pos
+        global pos, all_pos
+
         data = json.loads(msg.payload.decode())
-        if "35" in data:
-            pos = data["35"]
+        all_pos = data
+        if robot_id in data:
+            pos = data[robot_id]
         print(pos)
     except json.JSONDecodeError:
         print(f'invalid json: {msg.payload}')
@@ -44,8 +49,9 @@ pipuck.set_led_colour(1, "magenta")
 workspace_Lboarder = 50
 workspace_RBoarder = 60
 try:
+    last_pub_time = time.time()
+    publish_interval = 3 # 3 seconds
     for _ in range(1000):
-        # TODO: Do your stuff here
         
         speed = random.randint(300,1000)
         turn_speed = random.randint(100, 300)
@@ -69,6 +75,17 @@ try:
         else:
             pipuck.epuck.set_motor_speeds(turn_speed, -turn_speed)
         time.sleep(duration/10.0)
+
+        if time.time() - last_pub_time> publish_interval:
+            # read the position of all  robots, check if the robot in 50 cm radius and send a message to the one in the inerval
+            x = pos[0]
+            y = pos[1]
+            for rbt_id, robot_pos in all_pos.items():
+                if (robot_pos[0]-x)**2 + (robot_pos[1]-y)**2 < 0.5:
+                    print(f"robot {rbt_id} is 50 cm away")
+                    str = f"robot_pos/{rbt_id}"
+                    client.publish(str, "Hello")
+                    
 
 except KeyboardInterrupt:
     print("Interrupt detected!!")
