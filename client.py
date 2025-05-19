@@ -65,6 +65,9 @@ try:
         direction = random.choice(["left", "right"])
         start_time = time.time()
         #pipuck.epuck.set_motor_speeds(speed,speed)
+        pipuck.set_leds_colour("magenta")
+        time.sleep(0.1)
+        pipuck.set_leds_colour("off")
         if "position" in pos:
             current_pos = pos["position"]
             avoid_turn = 500
