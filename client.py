@@ -84,7 +84,7 @@ try:
                 if rbt_id == robot_id:
                     x = robot_pos["position"][0]
                     y = robot_pos["position"][1]
-                if (robot_pos["position"][0]-x)**2 + (robot_pos["position"][1]-y)**2 < 0.5:
+                if (robot_pos["position"][0]-current_pos[0])**2 + (robot_pos["position"][1]-current_pos[1])**2 < 0.5:
                     print(f"robot {rbt_id} is 50 cm away")
                     str = f"robot_pos/{rbt_id}"
                     client.publish(str, "Hello")
