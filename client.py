@@ -25,7 +25,9 @@ def on_message(client, userdata, msg):
         data = json.loads(msg.payload.decode())
         if msg.topic == "robot/+":
             robot_msg = json.loads(msg.payload.decode())
+            print(f"robot {robot_id} received message: {robot_msg}")
             pipuck.set_leds_colour("magenta")
+            pipuck.set_leds_colour("off")
         all_pos = data
         if robot_id in data:
             pos = data[robot_id]
