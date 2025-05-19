@@ -31,7 +31,7 @@ def on_message(client, userdata, msg):
         all_pos = data
         if robot_id in data:
             pos = data[robot_id]
-        print(pos)
+        #print(pos)
     except json.JSONDecodeError:
         print(f'invalid json: {msg.payload}')
 
