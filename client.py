@@ -6,7 +6,7 @@ import random
 
 pos = {}
 all_pos = {}
-robot_id = "35" 
+robot_id = "40" 
 
 # Define variables and callbacks
 Broker = "192.168.178.56"  # Replace with your broker address
@@ -88,9 +88,6 @@ try:
         time.sleep(duration/10.0)
 
         if time.time() - last_pub_time> publish_interval:
-            # read the position of all  robots, check if the robot in 50 cm radius and send a message to the one in the inerval
-            #x = pos[0]
-            #y = pos[1]
             for rbt_id, robot_pos in all_pos.items():
                 if rbt_id == robot_id:
                     x = robot_pos["position"][0]
@@ -100,7 +97,7 @@ try:
                     str = f"robot_pos/{rbt_id}"
                     client.publish(str, "Hello")
                     last_pub_time = time.time()
-                    #continue
+                    continue
                                     
 
 except KeyboardInterrupt:
