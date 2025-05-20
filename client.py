@@ -48,7 +48,7 @@ client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 
-client.connect(Broker, Port, 240)
+client.connect(Broker, Port, 60)
 
 client.loop_start() # Start listening loop in separate thread
 
