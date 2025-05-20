@@ -6,7 +6,7 @@ import random
 
 pos = {}
 all_pos = {}
-robot_id = "40" 
+robot_id = "35" 
 
 # Define variables and callbacks
 Broker = "192.168.178.56"  # Replace with your broker address
