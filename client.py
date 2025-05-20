@@ -7,7 +7,7 @@ import math
 
 pos = {}
 all_pos = {}
-robot_id = "40" 
+robot_id = "35" 
 runner_id = "2"
 
 # Define variables and callbacks
