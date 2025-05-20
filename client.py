@@ -76,10 +76,10 @@ try:
                 dx = runner_x-x
                 dy = runner_y-y
                 d_angle = math.degrees(math.atan2(dy, dx))
-                angle_diff = abs(robot_angle - my_angle)
+                angle_diff = (d_angle - my_angle + 180) % 360 - 180
                 if angle_diff < 5:
                     if angle_diff > 0:
-                        pipuck.epuck.set_motor_speeds(TURN_SPEED, TURN_SPEED)
+                        pipuck.epuck.set_motor_speeds(-TURN_SPEED, TURN_SPEED)
                     else:
                         pipuck.epuck.set_motor_speeds(TURN_SPEED, -TURN_SPEED)
                     time.sleep(TURN_SPEED/angle_diff)
