@@ -2,6 +2,9 @@ import paho.mqtt.client as mqtt
 import json
 import time
 from pipuck.pipuck import PiPuck
+import RPi.GPIO as GPIO
+GPIO.setwarnings(False)
+
 
 # Define variables and callbacks
 Broker = "192.168.178.56"  # Replace with your broker address
