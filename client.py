@@ -6,7 +6,7 @@ import math
 
 pos = {}
 all_pos = {}
-robot_id = "40"  # This robot is the chaser
+robot_id = "7"  # This robot is the chaser
 runner_id = "2"  # Target robot to chase
 
 Broker = "192.168.178.56"  # Replace with your MQTT broker address
