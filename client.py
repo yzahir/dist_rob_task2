@@ -3,12 +3,15 @@ import json
 import time
 from pipuck.pipuck import PiPuck
 import math
+import random
 
 # Setup
 pi_puck_id = "16"
 runner_id = "2"
 Broker = "192.168.178.56"
 Port = 1883
+
+max_range = 0.5  # Maximum range to consider other robots
 
 # Global storage
 puck_pos_dict = {}
@@ -29,9 +32,30 @@ def on_message(client, userdata, msg):
         if msg.topic == "robot_pos/all":
             puck_pos_dict.update(data)
 
-    except json.JSONDecodeError:
-        print(f"Invalid JSON: {msg.payload}")
+        if msg.topic == "robots/all":
+            x_self, y_self, _ = get_position()
+            for robot_id, robot_data in data.items():
+                # if robot_id == pi_puck_id:
+                #     continue  
+                msg_x = robot_data.get("x")
+                msg_y = robot_data.get("y")
 
+                dist = distance(x_self, y_self, msg_x, msg_y)
+                if dist <= max_range:
+                    puck_dict[robot_id] = robot_data
+
+    except json.JSONDecodeError:
+        print(f'invalid json: {msg.payload}')
+
+
+        print(f'invalid json: {msg.payload}')
+
+def distance(x1, y1, x2, y2):
+    return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+
+def publish_data(packet):
+    client.publish("robots/all", json.dumps(packet))
+    
 # Position getter
 def get_position(id=pi_puck_id):
     data = puck_pos_dict.get(id)
@@ -64,11 +88,24 @@ try:
 
     for _ in range(1000):
         time.sleep(0.1)  # reduce CPU load
-
+        print(f'puck_dict: {puck_dict}')
         x, y, angle = get_position()
-        if x is not None:
-            print(f"[{pi_puck_id}] Position: ({x:.2f}, {y:.2f}), Angle: {angle:.2f}")
-        print(f"Robots in range: {len(puck_pos_dict)}")
+        if x is not None and y is not None:
+            publish_data({
+                pi_puck_id: {
+                    "x": x,
+                    "y": y,
+                    "angle": angle,
+                    "sensors": {
+                        "temperature": random.randint(0,50),
+                        "humidity": random.randint(0,100),
+                        "light": random.randint(0,100)
+                    },
+                    "target_found": False
+                }
+            })
+        else:
+            print("Position data not available.")
 
 except KeyboardInterrupt:
     print("Interrupt detected. Stopping robot.")
