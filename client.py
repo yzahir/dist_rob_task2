@@ -24,6 +24,7 @@ pipuck = PiPuck(epuck_version=2)
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
     client.subscribe("robot_pos/all")
+    client.subscribe("robots/all")
 
 def on_message(client, userdata, msg):
     try:
