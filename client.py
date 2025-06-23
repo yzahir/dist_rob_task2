@@ -68,13 +68,7 @@ try:
         x, y, angle = get_position()
         if x is not None:
             print(f"[{pi_puck_id}] Position: ({x:.2f}, {y:.2f}), Angle: {angle:.2f}")
-        
-        if time.time() - last_pub_time > publish_interval:
-            last_pub_time = time.time()
-            # Example behavior: Blink LED to show activity
-            pipuck.set_led_rgb(0, 1, 0, 0)  # red
-            time.sleep(0.1)
-            pipuck.set_led_rgb(0, 0, 0, 0)  # off
+        print(f"Robots in range: {len(puck_pos_dict)}")
 
 except KeyboardInterrupt:
     print("Interrupt detected. Stopping robot.")
